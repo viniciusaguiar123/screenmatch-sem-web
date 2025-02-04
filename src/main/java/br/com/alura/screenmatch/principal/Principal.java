@@ -7,12 +7,7 @@ import br.com.alura.screenmatch.model.Episodio;
 import br.com.alura.screenmatch.service.ConsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -62,10 +57,23 @@ public class Principal {
                 .peek(episodio -> System.out.println("Mapeamento " + episodio))
                 .forEach(System.out::println);
 
-//        List<Episodio> episodios = temporadas.stream()
-//                .flatMap(temporada -> temporada.episodios().stream()
-//                        .map(dadosEpisodio -> new Episodio(temporada.numero(), dadosEpisodio))).collect(Collectors.toList());
-//        episodios.forEach(System.out::println);
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(temporada -> temporada.episodios().stream()
+                        .map(dadosEpisodio -> new Episodio(temporada.numero(), dadosEpisodio))).collect(Collectors.toList());
+        episodios.forEach(System.out::println);
+
+        System.out.println("Digite um trecho do titulo do episodio: ");
+        var trechoTitulo = leitura.nextLine();
+        Optional<Episodio> episodioFiltrado = episodios.stream()
+                .filter(episodio -> episodio.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
+                .findFirst();
+        if(episodioFiltrado.isPresent()){
+            System.out.println("Episodio encotrado!");
+            System.out.println("Temporada: " + episodioFiltrado.get().getTemporada());
+        }else {
+            System.out.println("Episodio não encontrado!");
+        }
+
 //        System.out.println("A partir de que ano você deseja ver os episódios? ");
 //        var ano = leitura.nextInt();
 //        leitura.nextLine();
