@@ -16,7 +16,5 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	public void run(String... args) {
 		Principal principal = new Principal();
 		principal.exibeMenu();
-
-
 	}
 }
